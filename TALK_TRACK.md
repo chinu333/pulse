@@ -29,7 +29,7 @@
 >
 > PULSE takes a single story idea and runs it through **twelve specialized AI agents** — from research to security to compliance — and delivers a publish-ready article, a podcast episode, multi-voice audio narration, video analysis, and multi-language translations.
 >
-> Everything you'll see is **live** — real calls to **Azure OpenAI GPT-4.1**, **Azure AI Search**, **Azure AI Speech (Dragon HD Omni)**, and **Azure Video Indexer** — running in our own Azure tenant, orchestrated by **LangGraph**, with full observability through **LangSmith**.
+> The AI pipeline is **live** — real calls to **Azure OpenAI GPT-4.1**, **Azure AI Search**, **Azure AI Speech (Dragon HD Omni)**, and **Azure Video Indexer** — running in our own Azure tenant, orchestrated by **LangGraph**, with full observability through **LangSmith**. We're using a **representative hurricane scenario** to showcase the full pipeline — the same architecture applies to any story from any Scripps market.
 >
 > The pipeline runs **step by step** — after each agent completes, I'll approve it so you can see exactly what every AI agent produces before the next one starts.
 >
@@ -101,7 +101,7 @@ Each agent runs one at a time. After each completes, a **bottom approval banner*
 ### Step 3: Researcher
 *Wait ~10–15 seconds. Banner appears.*
 
-> "The **Research agent** is hitting our **Azure AI Search** knowledge base right now — pulling relevant context, historical data, related stories, and source material. This is **RAG** — Retrieval-Augmented Generation — grounding the AI in real information, not hallucinations."
+> "The **Research agent** is hitting our **Azure AI Search** knowledge base right now — pulling relevant context, related stories, and source material. The knowledge base is seeded with **sample editorial content and Scripps guidelines** — in production, this would be ingesting live AP feeds, archive stories, and market-specific data. This is **RAG** — Retrieval-Augmented Generation — grounding the AI in real information, not hallucinations."
 
 **Click Continue.**
 
@@ -147,7 +147,7 @@ Each agent runs one at a time. After each completes, a **bottom approval banner*
 ### Step 7: Fact-Checker → Fact-Check Tab
 *Wait ~10–15 seconds. Tab auto-switches to Fact-Check.*
 
-> "The **Fact-Check agent** extracts every verifiable claim from the article and grades each one. It cross-references against our **Azure AI Search knowledge base** and uses the LLM to assess plausibility. It gives us a confidence score and flags anything that needs human verification before publish."
+> "The **Fact-Check agent** extracts every verifiable claim from the article and grades each one. It cross-references against our **Azure AI Search knowledge base** — the same sample knowledge base the researcher used — and uses the LLM to assess plausibility. In production with real Scripps content indexed, this becomes even more powerful. It gives us a confidence score and flags anything that needs human verification before publish."
 
 *Point out the score ring, verified claims in green, and any flagged items.*
 
@@ -348,7 +348,7 @@ Open the PULSE Assist chat by clicking the floating button (bottom-right).
 
 *Click the **Security** button in the header.*
 
-> "This opens the Security & Observability Dashboard — a full-screen, real-time view into the entire AI pipeline. This is powered by **LangSmith**, our observability layer. Think of it as Application Insights specifically built for AI agents."
+> "This opens the Security & Observability Dashboard — a full-screen, real-time view into the entire AI pipeline. The dashboard is built to integrate with **LangSmith**, our observability layer — think of it as Application Insights specifically built for AI agents. Right now, it's displaying **representative analytics data** to demonstrate the monitoring capabilities. In production, this aggregates live traces from every agent run flowing through PULSE."
 
 *Point to the KPI cards.*
 
@@ -374,7 +374,7 @@ Open the PULSE Assist chat by clicking the floating button (bottom-right).
 
 > "And here — the real-time Content Safety scanner. Every story goes through **Azure AI Content Safety** before and after the pipeline. We scan for hate speech, self-harm, violence, and sexual content — with severity levels from the Azure API. Plus our rule-based engine catches prompt injection and PII exposure. Defense-in-depth."
 
-> "This dashboard isn't mock data — it's hitting the **LangSmith API live**, pulling actual trace data from every agent run that has flowed through PULSE."
+> "In production, this dashboard hits the **LangSmith API live**, pulling actual trace data from every agent run flowing through PULSE — giving the CIO real-time visibility into AI operations."
 
 ---
 
@@ -406,7 +406,7 @@ Open the PULSE Assist chat by clicking the floating button (bottom-right).
 
 | Question | Answer |
 |----------|--------|
-| **"Is this using our data or public data?"** | In live mode, it uses our Azure AI Search knowledge base — all within our Azure tenant. No data leaves our environment. The LLM calls go to Azure OpenAI in our subscription. |
+| **"Is this using our data or public data?"** | The knowledge base in Azure AI Search is currently seeded with sample editorial content and Scripps guidelines. In production, we'd ingest live AP feeds, archive stories, and market-specific data. All within our Azure tenant — no data leaves our environment. The LLM calls go to Azure OpenAI in our subscription. |
 | **"Those images — are they really generated live?"** | Image generation is currently disabled in the pipeline. We evaluated gpt-image-1 but paused it for this demo to focus on the core editorial workflow. It can be re-enabled with one config change. |
 | **"What about hallucinations?"** | Two safeguards: (1) RAG — the researcher grounds the LLM in retrieved facts, not free generation. (2) The Fact-Check agent independently verifies every claim. Plus, the step-by-step approval means a human reviews everything before it progresses. |
 | **"How much does this cost to run?"** | Azure OpenAI is token-based. A full 12-agent pipeline run costs roughly $0.15–$0.40 per story (GPT-4.1 + Dragon HD Omni TTS). At scale, that's pennies per article compared to hours of human labor. |
@@ -418,6 +418,8 @@ Open the PULSE Assist chat by clicking the floating button (bottom-right).
 | **"Is this secure?"** | Yes. It uses **Azure RBAC** with `DefaultAzureCredential` — no API keys stored anywhere. In production, it runs on managed identity with network isolation. All data stays in our Azure subscription. |
 | **"What model is it using?"** | GPT-4.1 for text via Azure OpenAI, Dragon HD Omni for multi-voice TTS via Azure AI Speech. We can swap models by changing one config value. The architecture is model-agnostic. |
 | **"Can it handle breaking news speed?"** | The full pipeline runs in a few minutes with live API calls. For breaking news, we can configure the orchestrator to skip optional agents (e.g., skip podcast/translation, run only research → write → fact-check → publish) or run in automatic mode without approval pauses. |
+| **"Is the story scenario real?"** | The hurricane scenario is a representative sample designed to exercise every agent in the pipeline — research, fact-check, compliance, multi-voice audio, podcast, translations. The same architecture handles any story type from any Scripps market. |
+| **"Is the security dashboard live data?"** | The security analytics dashboard currently displays representative data to demonstrate monitoring capabilities. In production, it connects to LangSmith's API for real-time trace aggregation across all agent runs. The pipeline's Content Safety scans (inbound + outbound) are live Azure API calls. |
 | **"What's LangSmith and why do we need it?"** | LangSmith is our AI observability layer — it traces every LLM call with latency, tokens, and success/failure. The Security Dashboard pulls real run data from LangSmith via API — 7, 15, or 30 day analytics with Nightingale Rose charts, Radar charts, and daily breakdowns. Essential for production AI governance. |
 | **"Can the podcast use real voices?"** | It already does! Dragon HD Omni is Azure AI Speech's highest-quality neural voice family. Alex uses Andrew (male) and Morgan uses Ava (female). The audio narration uses three voices — Andrew, Ava, and Brian — for Anchor, Field Reporter, and Official Source respectively. |
 | **"How does the ad targeting work?"** | It's an AI agent — GPT-4.1 running in Azure OpenAI. For each Q&A interaction, the agent receives the user's question, story headline, response type, and the available ad catalog. It reasons about relevance and decides whether to show an ad and which one. No keyword matching, no fixed intervals — pure LLM reasoning. It even filters emotionally sensitive moments. |
