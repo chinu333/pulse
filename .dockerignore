@@ -1,0 +1,12 @@
+scribbs/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+*.md
+*.html.bak
+test_image.py
+generate_audio.py
+scripts/__pycache__/
+app/__pycache__/
+app/**/__pycache__/

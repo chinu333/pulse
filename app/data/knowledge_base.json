@@ -1,0 +1,51 @@
+[
+  {
+    "id": "kb_001",
+    "title": "E.W. Scripps Company Overview",
+    "content": "E.W. Scripps Company (NASDAQ: SSP) is a diversified media enterprise founded in 1878 by Edward Willis Scripps. Headquartered in Cincinnati, Ohio, the company operates 61 local television stations in 41 markets across the United States, reaching approximately 30% of U.S. households via its ABC, NBC, CBS, FOX, and CW affiliate stations. Scripps' national networks portfolio includes ION (the #1 most-watched ad-supported premium cable network in prime time), Scripps News, Bounce, Grit, Court TV, Laff, TrueReal, ION Mystery, ION Adventure, Defy TV, and Newsy.",
+    "category": "company_info",
+    "source": "corporate_profile.pdf"
+  },
+  {
+    "id": "kb_002",
+    "title": "Scripps Editorial Standards",
+    "content": "All Scripps news content must adhere to the highest standards of journalistic integrity. Reporters and editors must: (1) Verify information from at least two independent sources before publishing breaking news, (2) Clearly attribute all quotes and data to named sources, (3) Present balanced viewpoints on controversial topics, (4) Correct errors promptly and transparently, (5) Protect the identity of minors and crime victims as required by law, (6) Disclose potential conflicts of interest, (7) Distinguish clearly between news reporting and opinion/analysis.",
+    "category": "editorial_policy",
+    "source": "editorial_guidelines.pdf"
+  },
+  {
+    "id": "kb_003",
+    "title": "FCC Broadcast Compliance Requirements",
+    "content": "Broadcast television stations licensed by the FCC must comply with regulations including: political advertising disclosure (Section 315), children's programming requirements (Children's Television Act), equal employment opportunity rules, public file maintenance, sponsorship identification (Section 317), emergency alert system participation, closed captioning requirements, and obscenity/indecency restrictions. Violations can result in fines up to $500,000 per violation or license revocation.",
+    "category": "compliance",
+    "source": "compliance_handbook.pdf"
+  },
+  {
+    "id": "kb_004",
+    "title": "Digital Content SEO Guidelines",
+    "content": "Scripps digital content should follow SEO best practices: (1) Headlines: 55-70 characters, include location + primary keyword, (2) Meta descriptions: 150-160 characters, include call to action, (3) URL slugs: lowercase, hyphenated, keyword-rich, (4) Images: include alt text with keywords, compress to under 200KB, (5) Structured data: implement NewsArticle schema markup, (6) Internal linking: minimum 2-3 relevant internal links per article, (7) Social tags: populate Open Graph and Twitter Card meta tags for all stories.",
+    "category": "seo",
+    "source": "digital_style_guide.pdf"
+  },
+  {
+    "id": "kb_005",
+    "title": "Breaking News Protocol",
+    "content": "When covering breaking news, Scripps stations must follow this protocol: (1) VERIFY before broadcasting — minimum two independent sources, (2) Issue push notification alerts for stories meeting breaking criteria, (3) Activate continuous coverage plan if event exceeds Tier 2 severity, (4) Coordinate with Scripps News national desk for multi-market events, (5) Deploy live streaming immediately for visual stories, (6) Brief anchors with confirmed facts only — avoid speculation on-air, (7) Update digital platforms every 15 minutes minimum during active breaking coverage, (8) Include geographic impact zone, affected population estimate, and emergency contacts.",
+    "category": "editorial_policy",
+    "source": "breaking_news_playbook.pdf"
+  },
+  {
+    "id": "kb_006",
+    "title": "Audience Demographics & Market Data",
+    "content": "Scripps stations cumulatively reach approximately 30% of U.S. TV households. Key demographic breakdowns: Adults 25-54 represent the primary advertising target, with local news viewership peaking at 5-7 AM and 5-7 PM. Digital engagement has grown 45% year-over-year, with mobile devices accounting for 68% of web traffic. Social media referrals represent 22% of digital traffic, with Facebook leading at 14%, followed by Twitter/X at 5% and Instagram at 3%.",
+    "category": "audience",
+    "source": "audience_analytics_q4.pdf"
+  },
+  {
+    "id": "kb_007",
+    "title": "AI Ethics in Journalism",
+    "content": "Scripps policy on AI in newsrooms: (1) AI-generated content must always be reviewed by a human editor before publication, (2) Disclose AI assistance in content creation where required, (3) AI tools must not fabricate quotes, sources, or data, (4) Deepfake detection tools must be employed when evaluating user-submitted media, (5) AI summarization of public documents is acceptable with proper attribution, (6) AI shall not replace on-the-ground reporting for breaking news, (7) All AI tools used in editorial must be approved by the Standards & Practices department.",
+    "category": "ai_policy",
+    "source": "ai_ethics_framework.pdf"
+  }
+]

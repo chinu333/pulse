@@ -1,0 +1,214 @@
+{
+  "enabled": true,
+  "ads": [
+    {
+      "id": "ad-storm-homedepot",
+      "sponsor": "The Home Depot",
+      "sponsor_logo": "🏠",
+      "headline": "Storm Prep Essentials",
+      "body": "Generators, flashlights, plywood & more — everything you need to weather the storm safely.",
+      "cta_text": "Shop Storm Prep",
+      "cta_url": "https://www.homedepot.com/b/Storm-Prep/N-5yc1v",
+      "accent_color": "#f96302",
+      "context_keywords": ["hurricane", "storm", "tornado", "flood", "blizzard", "winter storm", "severe weather", "tropical", "typhoon", "cyclone", "emergency", "disaster", "evacuate", "evacuation", "power outage", "blackout", "prepare", "supplies", "shelter"]
+    },
+    {
+      "id": "ad-safety-redcross",
+      "sponsor": "American Red Cross",
+      "sponsor_logo": "✚",
+      "headline": "Get Alerts. Make a Plan. Build a Kit.",
+      "body": "Download the free Emergency App — real-time alerts, shelter maps, and first-aid tips for your area.",
+      "cta_text": "Download Free App",
+      "cta_url": "https://www.redcross.org/get-help/how-to-prepare-for-emergencies/mobile-apps.html",
+      "accent_color": "#ed1b2e",
+      "context_keywords": ["hurricane", "earthquake", "wildfire", "fire", "tsunami", "disaster", "emergency", "evacuate", "flood", "tornado", "safety", "prepare", "shelter", "first aid"]
+    },
+    {
+      "id": "ad-water-nestle",
+      "sponsor": "Nestlé Pure Life",
+      "sponsor_logo": "💧",
+      "headline": "Stock Up on Clean Water",
+      "body": "FEMA recommends 1 gallon per person per day. Order bulk packs for fast delivery before the storm hits.",
+      "cta_text": "Order Now",
+      "cta_url": "https://www.walmart.com/search?q=bottled+water+bulk",
+      "accent_color": "#0072ce",
+      "context_keywords": ["hurricane", "storm", "flood", "drought", "emergency", "prepare", "evacuate", "disaster", "water", "supplies"]
+    },
+    {
+      "id": "ad-insurance-statefarm",
+      "sponsor": "State Farm",
+      "sponsor_logo": "🛡️",
+      "headline": "Is Your Home Protected?",
+      "body": "Review your coverage before disaster strikes. Get a free quote in minutes — no obligation.",
+      "cta_text": "Get Free Quote",
+      "cta_url": "https://www.statefarm.com/insurance/home-and-property",
+      "accent_color": "#e3242b",
+      "context_keywords": ["hurricane", "storm", "flood", "earthquake", "wildfire", "fire", "tornado", "disaster", "damage", "insurance", "home", "property"]
+    },
+    {
+      "id": "ad-weather-weatherchannel",
+      "sponsor": "The Weather Channel",
+      "sponsor_logo": "⛅",
+      "headline": "Minute-by-Minute Forecasts",
+      "body": "Hyper-local radar, severe weather alerts & 15-day forecasts — be ready for whatever’s coming.",
+      "cta_text": "Get the App",
+      "cta_url": "https://weather.com/apps",
+      "accent_color": "#00a4e4",
+      "context_keywords": ["weather", "forecast", "rain", "temperature", "snow", "cold", "hot", "wind", "radar", "sunny", "cloudy", "humidity", "heatwave", "heat wave", "frost"]
+    },
+    {
+      "id": "ad-weather-acurite",
+      "sponsor": "AcuRite",
+      "sponsor_logo": "🌡️",
+      "headline": "Own Your Weather Data",
+      "body": "Smart home weather stations with real-time alerts. Know conditions at YOUR location, not miles away.",
+      "cta_text": "Shop Stations",
+      "cta_url": "https://www.acurite.com/weather-stations",
+      "accent_color": "#1a8c4e",
+      "context_keywords": ["weather", "forecast", "temperature", "rain", "humidity", "barometer", "wind", "backyard", "garden", "outdoor"]
+    },
+    {
+      "id": "ad-traffic-waze",
+      "sponsor": "Waze",
+      "sponsor_logo": "🚗",
+      "headline": "Beat the Traffic. Every Time.",
+      "body": "Real-time route optimization, hazard alerts & community-powered reports. Drive smarter, not harder.",
+      "cta_text": "Download Waze",
+      "cta_url": "https://www.waze.com/apps",
+      "accent_color": "#33ccff",
+      "context_keywords": ["traffic", "commute", "route", "drive", "driving", "road", "highway", "delay", "congestion", "accident", "detour", "travel time", "miles"]
+    },
+    {
+      "id": "ad-traffic-geico",
+      "sponsor": "GEICO",
+      "sponsor_logo": "🦎",
+      "headline": "15 Minutes Could Save You 15%",
+      "body": "Get a free auto insurance quote — switch and save an average of $500+ per year.",
+      "cta_text": "Get a Free Quote",
+      "cta_url": "https://www.geico.com/auto-insurance/",
+      "accent_color": "#007dc3",
+      "context_keywords": ["traffic", "driving", "drive", "commute", "road", "car", "auto", "accident", "vehicle", "highway", "miles"]
+    },
+    {
+      "id": "ad-gas-gasbuddy",
+      "sponsor": "GasBuddy",
+      "sponsor_logo": "⛽",
+      "headline": "Find the Cheapest Gas Near You",
+      "body": "Save up to $0.40/gal with real-time price comparisons & Pay with GasBuddy savings.",
+      "cta_text": "Find Low Prices",
+      "cta_url": "https://www.gasbuddy.com",
+      "accent_color": "#00b140",
+      "context_keywords": ["traffic", "drive", "driving", "gas", "fuel", "commute", "road trip", "miles", "route", "evacuation"]
+    },
+    {
+      "id": "ad-stores-instacart",
+      "sponsor": "Instacart",
+      "sponsor_logo": "🧀",
+      "headline": "Groceries Delivered in 1 Hour",
+      "body": "Shop from your favorite local stores — Costco, Kroger, Publix & more. First delivery free.",
+      "cta_text": "Start Shopping",
+      "cta_url": "https://www.instacart.com",
+      "accent_color": "#43b02a",
+      "context_keywords": ["stores", "grocery", "food", "shopping", "supplies", "delivery", "nearby", "costco", "kroger", "walmart", "supermarket"]
+    },
+    {
+      "id": "ad-stores-doordash",
+      "sponsor": "DoorDash",
+      "sponsor_logo": "🍔",
+      "headline": "Whatever You Need, Delivered",
+      "body": "Restaurants, groceries, convenience stores — delivered to your door in minutes. $0 delivery fees on first order.",
+      "cta_text": "Order Now",
+      "cta_url": "https://www.doordash.com",
+      "accent_color": "#ff3008",
+      "context_keywords": ["stores", "food", "restaurant", "delivery", "nearby", "supplies", "pharmacy", "convenience"]
+    },
+    {
+      "id": "ad-tech-careers",
+      "sponsor": "Indeed",
+      "sponsor_logo": "💼",
+      "headline": "2,000+ New Tech Jobs Near You",
+      "body": "Top companies are hiring — software engineers, data scientists & more. Apply today on Indeed.",
+      "cta_text": "Search Jobs",
+      "cta_url": "https://www.indeed.com/jobs?q=tech",
+      "accent_color": "#2164f3",
+      "context_keywords": ["jobs", "tech", "hiring", "careers", "employment", "economy", "workforce", "layoffs", "startup", "company", "business"]
+    },
+    {
+      "id": "ad-health-cvs",
+      "sponsor": "CVS Health",
+      "sponsor_logo": "💊",
+      "headline": "Flu & COVID Vaccines Available",
+      "body": "Walk in or schedule online — vaccines, prescriptions & health screenings at 9,000+ locations.",
+      "cta_text": "Find a Location",
+      "cta_url": "https://www.cvs.com/immunizations/covid-19-vaccine",
+      "accent_color": "#cc0000",
+      "context_keywords": ["health", "pandemic", "epidemic", "outbreak", "vaccine", "hospital", "medical", "flu", "covid", "pharmacy", "prescription", "doctor"]
+    },
+    {
+      "id": "ad-education-coursera",
+      "sponsor": "Coursera",
+      "sponsor_logo": "🎓",
+      "headline": "Learn New Skills for Free",
+      "body": "Top university courses in AI, data science, business & more. Certificates from Google, IBM, and Meta.",
+      "cta_text": "Browse Courses",
+      "cta_url": "https://www.coursera.org",
+      "accent_color": "#0056d2",
+      "context_keywords": ["education", "school", "university", "college", "students", "learning", "training", "skills", "investigation", "research"]
+    },
+    {
+      "id": "ad-safety-simplisafe",
+      "sponsor": "SimpliSafe",
+      "sponsor_logo": "🔒",
+      "headline": "Protect What Matters Most",
+      "body": "Award-winning home security — no contracts, no hidden fees. 24/7 professional monitoring from $15/mo.",
+      "cta_text": "Build Your System",
+      "cta_url": "https://simplisafe.com",
+      "accent_color": "#1c3a5f",
+      "context_keywords": ["crime", "safety", "security", "break-in", "theft", "burglary", "police", "neighborhood", "protect", "home"]
+    },
+    {
+      "id": "ad-local-development",
+      "sponsor": "Bank of America",
+      "sponsor_logo": "🏦",
+      "headline": "Invest in Your Community",
+      "body": "Small business loans, neighborhood grants & homebuyer programs to help build stronger communities.",
+      "cta_text": "Learn More",
+      "cta_url": "https://about.bankofamerica.com/en/making-an-impact/community-development",
+      "accent_color": "#012169",
+      "context_keywords": ["downtown", "revitalization", "development", "city council", "infrastructure", "rezoning", "budget", "municipal", "community", "local"]
+    },
+    {
+      "id": "ad-travel-kayak",
+      "sponsor": "KAYAK",
+      "sponsor_logo": "✈️",
+      "headline": "Search Hundreds of Travel Sites at Once",
+      "body": "Flights, hotels & rental cars — compare prices from 900+ sites and save up to 35%.",
+      "cta_text": "Search Deals",
+      "cta_url": "https://www.kayak.com",
+      "accent_color": "#ff690f",
+      "context_keywords": ["travel", "flight", "airport", "vacation", "hotel", "tourism", "international", "trip"]
+    },
+    {
+      "id": "ad-finance-nerdwallet",
+      "sponsor": "NerdWallet",
+      "sponsor_logo": "💰",
+      "headline": "Make Smarter Financial Decisions",
+      "body": "Compare credit cards, savings accounts, mortgages & more — transparent ratings, no hidden agendas.",
+      "cta_text": "Compare Now",
+      "cta_url": "https://www.nerdwallet.com",
+      "accent_color": "#20c05c",
+      "context_keywords": ["economy", "inflation", "interest rate", "mortgage", "housing", "market", "stock", "investment", "financial", "budget", "tax", "bank", "debt"]
+    },
+    {
+      "id": "ad-generic-aws",
+      "sponsor": "Amazon Web Services",
+      "sponsor_logo": "☁️",
+      "headline": "AI-Powered Newsrooms",
+      "body": "Scripps & AWS — powering the future of local journalism with generative AI and real-time analytics.",
+      "cta_text": "Explore Solutions",
+      "cta_url": "https://aws.amazon.com/media-entertainment/",
+      "accent_color": "#ff9900",
+      "context_keywords": ["_default"]
+    }
+  ]
+}

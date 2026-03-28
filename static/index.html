@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PULSE — Newsroom AI Orchestrator</title>
+    <link rel="stylesheet" href="/static/css/styles.css?v=24" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+    <!-- ── Header ─────────────────────────────────────────── -->
+    <header class="app-header">
+        <div class="header-center">
+            <h1><span class="brand-icon">⚡</span> PULSE</h1>
+            <span class="header-sub">Newsroom AI Orchestrator</span>
+        </div>
+        <div class="header-actions">
+            <!-- News Dub button hidden for now
+            <button class="dub-launch-btn" id="dubLaunchBtn" title="News Dub">
+                <i class="fas fa-language"></i>
+                <span>News Dub</span>
+            </button>
+            -->
+            <button class="security-dash-btn" id="secDashBtn" title="Security & Observability Dashboard">
+                <i class="fas fa-shield-halved"></i>
+                <span>Security</span>
+            </button>
+            <button class="avatar-launch-btn" id="avatarLaunchBtn" title="Launch AI News Anchor">
+                <i class="fas fa-user-astronaut"></i>
+                <span>AI Anchor</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ── Main Layout ────────────────────────────────────── -->
+    <main class="app-main">
+
+        <!-- ════ LEFT SIDEBAR ════════════════════════════════ -->
+        <aside class="sidebar">
+
+            <!-- Story Intake -->
+            <div class="sidebar-card">
+                <h3><i class="fas fa-pen-to-square"></i> Story Intake</h3>
+                <form id="storyForm" autocomplete="off">
+                    <!-- Image Upload Area -->
+                    <div class="form-group">
+                        <label>Image Upload</label>
+                        <div class="image-upload-zone" id="imageDropZone">
+                            <input type="file" id="imageFileInput" accept="image/*" hidden />
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                                <span>Drop an image or <em>click to browse</em></span>
+                            </div>
+                            <div class="upload-preview hidden" id="uploadPreview">
+                                <img id="previewImg" alt="Preview" />
+                                <button type="button" class="btn-remove-img" id="removeImgBtn" title="Remove image"><i class="fas fa-xmark"></i></button>
+                            </div>
+                            <div class="upload-analyzing hidden" id="uploadAnalyzing">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Analyzing image with GPT-4.1…</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="headline">Headline</label>
+                        <input type="text" id="headline" placeholder="Enter story headline…" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="2" placeholder="Brief description or lead…"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="priority">Priority</label>
+                            <select id="priority">
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="breaking">Breaking</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group half">
+                            <label for="audience">Audience</label>
+                            <select id="audience">
+                                <option value="general">General</option>
+                                <option value="local">Local</option>
+                                <option value="national">National</option>
+                                <option value="investigative">Investigative</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn" title="Submit Story"></button>
+                </form>
+            </div>
+
+            <!-- Sample Stories -->
+            <div class="sidebar-card">
+                <h3><i class="fas fa-newspaper"></i> Sample Stories</h3>
+                <div id="sampleList" class="sample-list"></div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="sidebar-card sidebar-feed-card">
+                <h3><i class="fas fa-stream"></i> Activity Feed <button class="btn-clear" id="clearFeedBtn" title="Clear feed"><i class="fas fa-trash-can"></i></button></h3>
+                <div id="activityFeed" class="activity-feed"></div>
+            </div>
+        </aside>
+
+        <!-- ════ CENTER OUTPUT ═══════════════════════════════ -->
+        <section class="output-area">
+            <!-- Tabs -->
+            <nav class="tab-bar">
+                <button class="tab active" data-tab="audio"><i class="fas fa-headphones"></i> Audio</button>
+                <button class="tab" data-tab="video"><i class="fas fa-video"></i> Video</button>
+                <button class="tab" data-tab="article"><i class="fas fa-file-lines"></i> Article</button>
+                <button class="tab" data-tab="factcheck"><i class="fas fa-check-double"></i> Fact-Check</button>
+                <button class="tab" data-tab="compliance"><i class="fas fa-shield-halved"></i> Compliance</button>
+                <button class="tab" data-tab="seo"><i class="fas fa-chart-line"></i> SEO</button>
+                <button class="tab" data-tab="podcast"><i class="fas fa-podcast"></i> Podcast</button>
+                <button class="tab" data-tab="translation"><i class="fas fa-language"></i> Translation</button>
+                <!-- Image tab hidden (image generator disabled) -->
+                <!-- <button class="tab" data-tab="image"><i class="fas fa-image"></i> Image</button> -->
+            </nav>
+
+            <!-- Article Tab -->
+            <div class="tab-content" id="tab-article">
+                <div class="output-placeholder" id="articlePlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-file-lines"></i></div>
+                    <p>Submit a story to see the AI-generated article</p>
+                </div>
+                <div class="article-output hidden" id="articleOutput">
+                    <h2 id="articleHeadline" class="article-headline"></h2>
+                    <p id="articleSubheadline" class="article-sub"></p>
+                    <div class="article-meta">
+                        <span id="articleWordCount" class="meta-badge"><i class="fas fa-font"></i> 0 words</span>
+                        <span id="articleTone" class="meta-badge"><i class="fas fa-palette"></i> neutral</span>
+                    </div>
+                    <div id="articleBody" class="article-body"></div>
+                    <div id="articleQuotes" class="article-quotes"></div>
+                </div>
+            </div>
+
+            <!-- Audio Tab -->
+            <div class="tab-content active" id="tab-audio">
+                <div class="output-placeholder" id="speechPlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-headphones"></i></div>
+                    <p>Audio transcription and narration will appear here</p>
+                </div>
+                <div class="speech-output hidden" id="speechOutput">
+                    <div class="speech-header">
+                        <div class="speech-stat">
+                            <span class="stat-value" id="speechDuration">0s</span>
+                            <span class="stat-label">Duration</span>
+                        </div>
+                        <div class="speech-stat">
+                            <span class="stat-value" id="speechConfidence">0%</span>
+                            <span class="stat-label">Confidence</span>
+                        </div>
+                        <div class="speech-stat">
+                            <span class="stat-value" id="speechLanguage">—</span>
+                            <span class="stat-label">Language</span>
+                        </div>
+                    </div>
+                    <div class="speech-sections">
+                        <div class="speech-section">
+                            <h4><i class="fas fa-align-left"></i> Transcript</h4>
+                            <div id="speechTranscript" class="speech-transcript"></div>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-users"></i> Speakers</h4>
+                            <div id="speechSpeakers" class="speech-speakers"></div>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-volume-up"></i> Article Narration</h4>
+                            <div class="narration-player" id="narrationPlayer">
+                                <button class="play-btn" id="narrationPlayBtn" title="Play Narration">
+                                    <i class="fas fa-play" id="narrationPlayIcon"></i>
+                                </button>
+                                <div class="player-body">
+                                    <div class="player-waveform" id="narrationWaveform">
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    </div>
+                                    <div class="player-info">
+                                        <span class="player-status" id="narrationStatus">Ready to play</span>
+                                        <span class="player-voice" id="narrationVoice"></span>
+                                    </div>
+                                </div>
+                                <button class="stop-btn" id="narrationStopBtn" title="Stop">
+                                    <i class="fas fa-stop"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Tab -->
+            <div class="tab-content" id="tab-video">
+                <div class="output-placeholder" id="videoPlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-video"></i></div>
+                    <p>Video analysis insights will appear here</p>
+                </div>
+                <div class="video-output hidden" id="videoOutput">
+                    <div class="video-header">
+                        <div class="speech-stat">
+                            <span class="stat-value" id="videoDuration">0s</span>
+                            <span class="stat-label">Duration</span>
+                        </div>
+                        <div class="speech-stat">
+                            <span class="stat-value" id="videoScenes">0</span>
+                            <span class="stat-label">Scenes</span>
+                        </div>
+                        <div class="speech-stat">
+                            <span class="stat-value" id="videoFaces">0</span>
+                            <span class="stat-label">Faces</span>
+                        </div>
+                    </div>
+                    <div class="video-sections">
+                        <div class="speech-section">
+                            <h4><i class="fas fa-tags"></i> Topics</h4>
+                            <div id="videoTopics" class="video-tags"></div>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-film"></i> Scenes</h4>
+                            <div id="videoSceneList" class="video-scene-list"></div>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-user-circle"></i> Faces</h4>
+                            <div id="videoFaceList" class="video-face-list"></div>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-closed-captioning"></i> OCR Text</h4>
+                            <div id="videoOcr" class="video-ocr"></div>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-shield-halved"></i> Moderation</h4>
+                            <div id="videoModeration" class="video-moderation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Translation Tab -->
+            <div class="tab-content" id="tab-translation">
+                <div class="output-placeholder" id="translationPlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-language"></i></div>
+                    <p>Multi-language translations will appear here</p>
+                </div>
+                <div class="translation-output hidden" id="translationOutput">
+                    <div class="translation-header" id="translationHeader"></div>
+                    <div class="translation-cards" id="translationCards"></div>
+                </div>
+            </div>
+
+            <!-- Image Tab -->
+            <div class="tab-content" id="tab-image">
+                <div class="output-placeholder" id="imagePlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-image"></i></div>
+                    <p>AI-generated hero images will appear here</p>
+                </div>
+                <div class="image-output hidden" id="imageOutput">
+                    <div class="image-thumb-grid" id="imageThumbGrid">
+                        <!-- Thumbnails injected by JS -->
+                    </div>
+                    <div class="image-meta">
+                        <div class="speech-section">
+                            <h4><i class="fas fa-quote-left"></i> Alt Text</h4>
+                            <p id="imageAltText" class="image-alt-text"></p>
+                        </div>
+                        <div class="speech-section">
+                            <h4><i class="fas fa-wand-magic-sparkles"></i> Prompt Used</h4>
+                            <p id="imagePrompt" class="image-prompt"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Lightbox -->
+            <div class="image-lightbox hidden" id="imageLightbox">
+                <div class="lightbox-overlay" onclick="closeLightbox()"></div>
+                <div class="lightbox-content">
+                    <button class="lightbox-close" onclick="closeLightbox()" title="Close"><i class="fas fa-times"></i></button>
+                    <img id="lightboxImg" src="" alt="" />
+                    <div class="lightbox-caption">
+                        <span class="lightbox-style" id="lightboxStyle"></span>
+                        <span class="lightbox-dims" id="lightboxDims">1024×1024</span>
+                    </div>
+                    <p class="lightbox-alt" id="lightboxAlt"></p>
+                </div>
+            </div>
+
+            <!-- Podcast Tab -->
+            <div class="tab-content" id="tab-podcast">
+                <div class="output-placeholder" id="podcastPlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-podcast"></i></div>
+                    <p>Podcast episode script and player will appear here</p>
+                </div>
+                <div class="podcast-output hidden" id="podcastOutput">
+                    <div class="podcast-header">
+                        <div class="podcast-title-row">
+                            <h3 id="podcastTitle" class="podcast-title"></h3>
+                        </div>
+                        <p id="podcastSummary" class="podcast-summary"></p>
+                        <div class="podcast-stats">
+                            <span class="meta-badge"><i class="fas fa-clock"></i> <span id="podcastDuration">0</span> min</span>
+                            <span class="meta-badge"><i class="fas fa-list-ol"></i> <span id="podcastSegments">0</span> segments</span>
+                            <span class="meta-badge"><i class="fas fa-microphone-lines"></i> <span id="podcastHostA">Alex</span> & <span id="podcastHostB">Morgan</span></span>
+                        </div>
+                    </div>
+                    <div class="speech-section">
+                        <h4><i class="fas fa-bars-staggered"></i> Segments</h4>
+                        <div id="podcastSegmentList" class="podcast-segment-list"></div>
+                    </div>
+                    <div class="speech-section">
+                        <h4><i class="fas fa-scroll"></i> Script</h4>
+                        <div id="podcastScript" class="podcast-script"></div>
+                    </div>
+                    <div class="speech-section podcast-player-section">
+                        <h4><i class="fas fa-headphones"></i> Listen</h4>
+                        <div class="narration-player" id="podcastPlayer">
+                            <button class="play-btn" id="podcastPlayBtn" title="Play Podcast">
+                                <i class="fas fa-play" id="podcastPlayIcon"></i>
+                            </button>
+                            <div class="player-body">
+                                <div class="player-waveform" id="podcastWaveform">
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                                </div>
+                                <div class="player-info">
+                                    <span class="player-status" id="podcastStatus">Ready to play</span>
+                                    <span class="player-voice" id="podcastVoiceLabel">Dragon HD Omni</span>
+                                </div>
+                            </div>
+                            <button class="stop-btn" id="podcastStopBtn" title="Stop">
+                                <i class="fas fa-stop"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Tab -->
+            <div class="tab-content" id="tab-seo">
+                <div class="output-placeholder" id="seoPlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-chart-line"></i></div>
+                    <p>SEO optimization results will appear here</p>
+                </div>
+                <div class="seo-output hidden" id="seoOutput">
+                    <div class="seo-score-ring">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="42" class="ring-bg" />
+                            <circle cx="50" cy="50" r="42" class="ring-fill" id="seoRing" />
+                        </svg>
+                        <span class="ring-label" id="seoScoreLabel">0%</span>
+                    </div>
+                    <div class="seo-details">
+                        <div class="seo-field">
+                            <label>Optimized Headline</label>
+                            <p id="seoHeadline"></p>
+                        </div>
+                        <div class="seo-field">
+                            <label>Meta Description</label>
+                            <p id="seoMeta"></p>
+                        </div>
+                        <div class="seo-field">
+                            <label>Keywords</label>
+                            <div id="seoKeywords" class="tag-list"></div>
+                        </div>
+                        <div class="seo-field">
+                            <label>Social Copy</label>
+                            <div id="seoSocial" class="social-copy-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fact-Check Tab -->
+            <div class="tab-content" id="tab-factcheck">
+                <div class="output-placeholder" id="factPlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-check-double"></i></div>
+                    <p>Fact-check results will appear here</p>
+                </div>
+                <div class="fact-output hidden" id="factOutput">
+                    <div class="seo-score-ring">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="42" class="ring-bg" />
+                            <circle cx="50" cy="50" r="42" class="ring-fill" id="factRing" />
+                        </svg>
+                        <span class="ring-label" id="factScoreLabel">0%</span>
+                    </div>
+                    <div class="fact-details">
+                        <div class="fact-section">
+                            <h4><i class="fas fa-circle-check"></i> Verified Claims</h4>
+                            <div id="factVerified" class="claim-list"></div>
+                        </div>
+                        <div class="fact-section">
+                            <h4><i class="fas fa-triangle-exclamation"></i> Flagged Issues</h4>
+                            <div id="factFlagged" class="claim-list"></div>
+                        </div>
+                        <div class="fact-section">
+                            <h4><i class="fas fa-clipboard-list"></i> Recommendation</h4>
+                            <p id="factRecommendation" class="fact-recommendation"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance Tab -->
+            <div class="tab-content" id="tab-compliance">
+                <div class="output-placeholder" id="compliancePlaceholder">
+                    <div class="placeholder-icon"><i class="fas fa-shield-halved"></i></div>
+                    <p>Compliance review results will appear here</p>
+                </div>
+                <div class="compliance-output hidden" id="complianceOutput">
+                    <div class="compliance-badge" id="complianceBadge">
+                        <i class="fas fa-shield-halved"></i>
+                        <span id="complianceVerdict">PENDING</span>
+                    </div>
+                    <div class="compliance-details">
+                        <div class="fact-section">
+                            <h4><i class="fas fa-gavel"></i> Legal Flags</h4>
+                            <div id="complianceLegal" class="claim-list"></div>
+                        </div>
+                        <div class="fact-section">
+                            <h4><i class="fas fa-flag"></i> Issues</h4>
+                            <div id="complianceIssues" class="claim-list"></div>
+                        </div>
+                        <div class="fact-section">
+                            <h4><i class="fas fa-lightbulb"></i> Suggestions</h4>
+                            <div id="complianceSuggestions" class="claim-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ════ RIGHT PIPELINE PANEL ════════════════════════ -->
+        <aside class="pipeline-panel">
+            <h3 class="pipeline-title"><i class="fas fa-diagram-project"></i> Agent Pipeline</h3>
+            <div class="pipeline-nodes">
+                <div class="pipeline-node" data-agent="orchestrator">
+                    <div class="node-icon"><i class="fas fa-user-tie"></i></div>
+                    <span class="node-label">Orchestrator</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="security">
+                    <div class="node-icon"><i class="fas fa-shield-halved"></i></div>
+                    <span class="node-label">Content Safety</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="researcher">
+                    <div class="node-icon"><i class="fas fa-magnifying-glass"></i></div>
+                    <span class="node-label">Researcher</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="speech">
+                    <div class="node-icon"><i class="fas fa-headphones"></i></div>
+                    <span class="node-label">Speech</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="video">
+                    <div class="node-icon"><i class="fas fa-video"></i></div>
+                    <span class="node-label">Video</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="writer">
+                    <div class="node-icon"><i class="fas fa-pen-nib"></i></div>
+                    <span class="node-label">Writer</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <!-- Image Gen node disabled per CIO feedback (not using gpt-image-1)
+                <div class="pipeline-node" data-agent="image_generator">
+                    <div class="node-icon"><i class="fas fa-image"></i></div>
+                    <span class="node-label">Image Gen</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                -->
+                <div class="pipeline-node" data-agent="fact_checker">
+                    <div class="node-icon"><i class="fas fa-check-double"></i></div>
+                    <span class="node-label">Fact-Checker</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="security_outbound">
+                    <div class="node-icon"><i class="fas fa-shield-halved"></i></div>
+                    <span class="node-label">Security and Brand</span>
+                </div>
+                <div class="pipeline-connector compliance-gate-connector"></div>
+                <div class="pipeline-node" data-agent="compliance">
+                    <div class="node-icon"><i class="fas fa-shield-halved"></i></div>
+                    <span class="node-label">Compliance</span>
+                </div>
+                <div class="pipeline-connector compliance-gate-connector"></div>
+                <div class="pipeline-node" data-agent="optimizer">
+                    <div class="node-icon"><i class="fas fa-chart-line"></i></div>
+                    <span class="node-label">SEO</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="podcast">
+                    <div class="node-icon"><i class="fas fa-podcast"></i></div>
+                    <span class="node-label">Podcast</span>
+                </div>
+                <div class="pipeline-connector"></div>
+                <div class="pipeline-node" data-agent="translator">
+                    <div class="node-icon"><i class="fas fa-language"></i></div>
+                    <span class="node-label">Translator</span>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="app-footer">
+        <span>CREATED BY | CHINMOY C.</span>
+    </footer>
+
+    <!-- ── Floating Q&A Chat Button ───────────────────────── -->
+    <button class="qa-fab" id="qaFab" title="Ask a question">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- ── Q&A Assistance Panel (Glassmorphism) ───────────── -->
+    <div class="qa-popup hidden" id="qaPopup">
+        <div class="qa-popup-header">
+            <div class="qa-popup-title">
+                <i class="fas fa-satellite-dish"></i>
+                <span>PULSE Assist</span>
+                <span class="qa-live-badge" id="qaLiveBadge">LIVE</span>
+            </div>
+            <button class="qa-popup-close" id="qaCloseBtn" title="Close"><i class="fas fa-xmark"></i></button>
+        </div>
+
+        <!-- ── Quick-Action Toolbar ─────────────────────────── -->
+        <div class="qa-toolbar" id="qaToolbar">
+            <button class="qa-tool-btn active" data-panel="chat" title="Chat">
+                <i class="fas fa-comments"></i><span>Chat</span>
+            </button>
+            <button class="qa-tool-btn" data-panel="weather" id="qaWeatherTab" title="Weather">
+                <i class="fas fa-cloud-sun"></i><span>Weather</span>
+            </button>
+            <button class="qa-tool-btn" data-panel="traffic" id="qaTrafficTab" title="Traffic">
+                <i class="fas fa-route"></i><span>Traffic</span>
+            </button>
+            <button class="qa-tool-btn" data-panel="stores" id="qaStoresTab" title="Find Stores">
+                <i class="fas fa-store"></i><span>Stores</span>
+            </button>
+        </div>
+
+        <!-- ════ CHAT PANEL ════════════════════════════════════ -->
+        <div class="qa-panel active" id="qaPanelChat">
+            <div class="qa-popup-body" id="qaMessages">
+                <!-- Greeting set dynamically by JS -->
+            </div>
+            <!-- Ad banner: fixed between chat and input, always visible -->
+            <div class="qa-ad-banner hidden" id="qaAdBanner"></div>
+            <div class="qa-popup-footer">
+                <div class="qa-input-row">
+                    <button class="qa-mic-btn" id="qaMicBtn" title="Voice input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="qa-stop-voice-btn hidden" id="qaStopVoiceBtn" title="Stop voice">
+                        <i class="fas fa-volume-xmark"></i>
+                    </button>
+                    <input type="text" id="qaInput" placeholder="Ask about nearby resources…" />
+                    <button class="qa-send-btn" id="qaSendBtn" title="Send"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════ WEATHER PANEL ═════════════════════════════════ -->
+        <div class="qa-panel" id="qaPanelWeather">
+            <div class="qa-weather-header">
+                <div class="qa-weather-location" id="qaWeatherLocation">
+                    <i class="fas fa-map-marker-alt"></i> <span>Detecting location…</span>
+                </div>
+                <span class="qa-weather-badge">7-Day Forecast</span>
+            </div>
+            <div class="qa-weather-grid" id="qaWeatherGrid">
+                <div class="qa-weather-placeholder">
+                    <i class="fas fa-cloud-sun"></i>
+                    <p>Enter your ZIP code to see the forecast</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════ TRAFFIC PANEL ═════════════════════════════════ -->
+        <div class="qa-panel" id="qaPanelTraffic">
+            <div class="qa-traffic-form">
+                <div class="qa-traffic-origin">
+                    <label><i class="fas fa-crosshairs"></i> From</label>
+                    <input type="text" id="qaTrafficOrigin" placeholder="Your location (auto-detected)" readonly />
+                </div>
+                <div class="qa-traffic-dest">
+                    <label><i class="fas fa-flag-checkered"></i> To</label>
+                    <select id="qaTrafficDest">
+                        <option value="">Select a city…</option>
+                        <option value="New York, NY">New York, NY</option>
+                        <option value="Los Angeles, CA">Los Angeles, CA</option>
+                        <option value="Chicago, IL">Chicago, IL</option>
+                        <option value="Houston, TX">Houston, TX</option>
+                        <option value="Miami, FL">Miami, FL</option>
+                        <option value="Atlanta, GA">Atlanta, GA</option>
+                        <option value="Dallas, TX">Dallas, TX</option>
+                        <option value="Tampa, FL">Tampa, FL</option>
+                        <option value="Orlando, FL">Orlando, FL</option>
+                        <option value="Jacksonville, FL">Jacksonville, FL</option>
+                        <option value="Charlotte, NC">Charlotte, NC</option>
+                        <option value="Nashville, TN">Nashville, TN</option>
+                        <option value="New Orleans, LA">New Orleans, LA</option>
+                        <option value="San Antonio, TX">San Antonio, TX</option>
+                        <option value="Phoenix, AZ">Phoenix, AZ</option>
+                        <option value="Denver, CO">Denver, CO</option>
+                        <option value="Seattle, WA">Seattle, WA</option>
+                        <option value="San Francisco, CA">San Francisco, CA</option>
+                        <option value="Washington, DC">Washington, DC</option>
+                        <option value="Boston, MA">Boston, MA</option>
+                    </select>
+                </div>
+                <button class="qa-traffic-go" id="qaTrafficGoBtn">
+                    <i class="fas fa-route"></i> Check Traffic
+                </button>
+            </div>
+            <div class="qa-traffic-result" id="qaTrafficResult">
+                <div class="qa-weather-placeholder">
+                    <i class="fas fa-car"></i>
+                    <p>Select a destination to check live traffic</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════ STORES PANEL ══════════════════════════════════ -->
+        <div class="qa-panel" id="qaPanelStores">
+            <div class="qa-stores-form">
+                <div class="qa-zip-row" id="qaZipRow">
+                    <label for="qaZipcode"><i class="fas fa-map-pin"></i></label>
+                    <input type="text" id="qaZipcode" placeholder="ZIP code" maxlength="5" />
+                    <button class="qa-stores-btn" id="qaStoresBtn" title="Find nearby stores">
+                        <i class="fas fa-store"></i> Find Stores
+                    </button>
+                </div>
+            </div>
+            <div class="qa-stores-body" id="qaStoresBody">
+                <div class="qa-weather-placeholder">
+                    <i class="fas fa-store"></i>
+                    <p>Enter your ZIP to find nearby preparation stores</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step Approval Banner (bottom, non-blocking) -->
+    <div class="step-banner hidden" id="stepBanner">
+        <div class="step-banner-inner">
+            <div class="step-banner-left">
+                <div class="step-banner-icon" id="stepBannerIcon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="step-banner-info">
+                    <div class="step-banner-title" id="stepBannerTitle">Agent Complete</div>
+                    <div class="step-banner-summary" id="stepBannerSummary"></div>
+                </div>
+            </div>
+            <div class="step-banner-center">
+                <div class="step-banner-progress">
+                    <div class="step-progress-bar">
+                        <div class="step-progress-fill" id="stepProgressFill" style="width:0%"></div>
+                    </div>
+                    <span class="step-progress-text" id="stepProgressText">Step 1 of 12</span>
+                </div>
+            </div>
+            <div class="step-banner-actions">
+                <button class="step-btn-end" id="stepEndBtn" title="End pipeline here">
+                    <i class="fas fa-stop"></i> End Pipeline
+                </button>
+                <button class="step-btn-continue" id="stepContinueBtn">
+                    <span id="stepBtnText">Continue</span>
+                    <i class="fas fa-arrow-right" id="stepBtnIcon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Dubbing Modal ──────────────────────────────────── -->
+    <div class="dub-modal-overlay hidden" id="dubModal">
+        <div class="dub-modal">
+            <div class="dub-modal-header">
+                <div class="dub-modal-title">
+                    <i class="fas fa-language"></i>
+                    <span>News Dub</span>
+                    <span class="dub-badge">MULTI-VOICE</span>
+                </div>
+                <button class="avatar-close-btn" id="dubCloseBtn" title="Close">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            <div class="dub-modal-body">
+                <!-- Left: Script view -->
+                <div class="dub-script-panel">
+                    <div class="dub-script-header">
+                        <h4><i class="fas fa-scroll"></i> <span id="dubScriptTitle">Hurricane Milton — Live Coverage</span></h4>
+                        <span class="dub-duration" id="dubDuration">60 seconds</span>
+                    </div>
+                    <div class="dub-segments" id="dubSegments">
+                        <!-- Segments rendered by JS -->
+                    </div>
+                </div>
+                <!-- Right: Controls -->
+                <div class="dub-control-panel">
+                    <div class="dub-lang-section">
+                        <h4><i class="fas fa-globe"></i> Select Language</h4>
+                        <div class="dub-lang-buttons" id="dubLangButtons">
+                            <button class="dub-lang-btn active" data-lang="en">🇺🇸 English</button>
+                            <button class="dub-lang-btn" data-lang="es">🇪🇸 Spanish</button>
+                            <button class="dub-lang-btn" data-lang="fr">🇫🇷 French</button>
+                        </div>
+                    </div>
+                    <div class="dub-voice-section">
+                        <h4><i class="fas fa-microphone-lines"></i> Voice Cast</h4>
+                        <div class="dub-voice-list" id="dubVoiceList">
+                            <!-- Voice cards rendered by JS -->
+                        </div>
+                    </div>
+                    <div class="dub-playback-section">
+                        <h4><i class="fas fa-headphones"></i> Playback</h4>
+                        <div class="dub-playback-controls">
+                            <button class="dub-play-btn" id="dubPlayAllBtn">
+                                <i class="fas fa-play"></i> Play Full Dub
+                            </button>
+                            <button class="dub-stop-btn" id="dubStopBtn" disabled>
+                                <i class="fas fa-stop"></i> Stop
+                            </button>
+                        </div>
+                        <div class="dub-progress" id="dubProgress">
+                            <div class="dub-progress-bar" id="dubProgressBar"></div>
+                        </div>
+                        <div class="dub-status" id="dubStatus">Ready — select a language and press Play</div>
+                    </div>
+                    <audio id="dubAudio" hidden></audio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Avatar Modal ──────────────────────────────────── -->
+    <div class="avatar-modal-overlay hidden" id="avatarModal">
+        <div class="avatar-modal">
+            <div class="avatar-modal-header">
+                <div class="avatar-modal-title">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>AI News Anchor</span>
+                    <span class="avatar-badge">LIVE</span>
+                </div>
+                <div class="avatar-modal-controls">
+                    <button class="avatar-ctrl-btn" id="avatarMuteBtn" title="Mute/Unmute">
+                        <i class="fas fa-microphone" id="avatarMuteIcon"></i>
+                    </button>
+                    <button class="avatar-ctrl-btn" id="avatarFullscreenBtn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="avatar-close-btn" id="avatarCloseBtn" title="Close">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="avatar-modal-body">
+                <div class="avatar-video-container" id="avatarVideoContainer">
+                    <video id="avatarVideo" autoplay playsinline></video>
+                    <canvas id="avatarCanvas" hidden></canvas>
+                    <div class="avatar-loading" id="avatarLoading">
+                        <div class="avatar-loading-spinner"></div>
+                        <p id="avatarLoadingText">Connecting to AI Anchor…</p>
+                    </div>
+                    <div class="avatar-status-bar" id="avatarStatusBar">
+                        <span class="avatar-status-dot" id="avatarStatusDot"></span>
+                        <span id="avatarStatusText">Initializing</span>
+                    </div>
+                </div>
+                <div class="avatar-teleprompter" id="avatarTeleprompter">
+                    <div class="teleprompter-header">
+                        <h4><i class="fas fa-scroll"></i> Teleprompter</h4>
+                    </div>
+                    <div class="teleprompter-text" id="teleprompterText">
+                        <p class="teleprompter-placeholder">Article text will appear here when a story is ready…</p>
+                    </div>
+                    <div class="avatar-action-bar">
+                        <button class="avatar-action-btn" id="avatarSpeakBtn" disabled>
+                            <i class="fas fa-play"></i> Read Article
+                        </button>
+                        <button class="avatar-action-btn secondary" id="avatarStopSpeakBtn" disabled>
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Security & Observability Dashboard Modal ────────── -->
+    <div class="sec-dash-overlay hidden" id="secDashOverlay">
+        <div class="sec-dash-modal">
+            <div class="sec-dash-header">
+                <div class="sec-dash-title">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>Security & Observability Dashboard</span>
+                    <div class="sec-source-toggle" id="secSourceToggle">
+                        <button class="sec-source-btn active" data-source="mock"><i class="fas fa-database"></i> Mock</button>
+                        <button class="sec-source-btn" data-source="live"><i class="fas fa-bolt"></i> Live</button>
+                    </div>
+                </div>
+                <div class="sec-dash-controls">
+                    <div class="sec-dash-period-toggle" id="secPeriodToggle">
+                        <button class="sec-period-btn active" data-days="7">7 Days</button>
+                        <button class="sec-period-btn" data-days="15">15 Days</button>
+                        <button class="sec-period-btn" data-days="30">30 Days</button>
+                    </div>
+                    <button class="sec-dash-refresh" id="secDashRefresh" title="Refresh"><i class="fas fa-rotate"></i></button>
+                    <button class="sec-dash-close" id="secDashClose" title="Close"><i class="fas fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="sec-dash-body">
+                <!-- Row 1: KPI Cards -->
+                <div class="sec-kpi-row" id="secKpiRow">
+                    <div class="sec-kpi-card">
+                        <div class="sec-kpi-icon runs"><i class="fas fa-play-circle"></i></div>
+                        <div class="sec-kpi-data">
+                            <span class="sec-kpi-value" id="kpiTotalRuns">—</span>
+                            <span class="sec-kpi-label">Total Agent Runs</span>
+                        </div>
+                    </div>
+                    <div class="sec-kpi-card">
+                        <div class="sec-kpi-icon success"><i class="fas fa-check-circle"></i></div>
+                        <div class="sec-kpi-data">
+                            <span class="sec-kpi-value" id="kpiSuccessRate">—</span>
+                            <span class="sec-kpi-label">Success Rate</span>
+                        </div>
+                    </div>
+                    <div class="sec-kpi-card">
+                        <div class="sec-kpi-icon tokens"><i class="fas fa-coins"></i></div>
+                        <div class="sec-kpi-data">
+                            <span class="sec-kpi-value" id="kpiTokens">—</span>
+                            <span class="sec-kpi-label">Total Tokens</span>
+                        </div>
+                    </div>
+                    <div class="sec-kpi-card">
+                        <div class="sec-kpi-icon latency"><i class="fas fa-gauge-high"></i></div>
+                        <div class="sec-kpi-data">
+                            <span class="sec-kpi-value" id="kpiLatency">—</span>
+                            <span class="sec-kpi-label">Avg Latency</span>
+                        </div>
+                    </div>
+                    <div class="sec-kpi-card">
+                        <div class="sec-kpi-icon threats"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="sec-kpi-data">
+                            <span class="sec-kpi-value" id="kpiThreats">—</span>
+                            <span class="sec-kpi-label">Threats Caught</span>
+                        </div>
+                    </div>
+                    <div class="sec-kpi-card">
+                        <div class="sec-kpi-icon p95"><i class="fas fa-stopwatch"></i></div>
+                        <div class="sec-kpi-data">
+                            <span class="sec-kpi-value" id="kpiP95">—</span>
+                            <span class="sec-kpi-label">P95 Latency</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Charts (2x2) -->
+                <div class="sec-chart-grid">
+                    <div class="sec-chart-card">
+                        <h4><i class="fas fa-chart-pie"></i> Agent Run Distribution</h4>
+                        <div class="sec-chart" id="chartAgentRose"></div>
+                    </div>
+                    <div class="sec-chart-card">
+                        <h4><i class="fas fa-satellite-dish"></i> Agent Reliability Radar</h4>
+                        <div class="sec-chart" id="chartAgentRadar"></div>
+                    </div>
+                    <div class="sec-chart-card">
+                        <h4><i class="fas fa-chart-area"></i> Daily Pipeline Activity</h4>
+                        <div class="sec-chart" id="chartDailyActivity"></div>
+                    </div>
+                    <div class="sec-chart-card">
+                        <h4><i class="fas fa-fire"></i> Token Consumption Heatmap</h4>
+                        <div class="sec-chart" id="chartTokens"></div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Content Safety Engine + Session Results + Errors -->
+                <div class="sec-bottom-row-3">
+                    <!-- Scan Engine Capabilities -->
+                    <div class="sec-engine-card">
+                        <h4><i class="fas fa-radar"></i> Content Safety Engine</h4>
+                        <div class="sec-engine-rules">
+                            <div class="sec-rule-group">
+                                <div class="sec-rule-header">
+                                    <i class="fas fa-shield-virus"></i>
+                                    <span>Prompt Injection</span>
+                                    <span class="sec-rule-count" id="ruleInjectionCount">11 patterns</span>
+                                </div>
+                                <div class="sec-rule-bar"><div class="sec-rule-fill injection" id="ruleInjectionBar"></div></div>
+                            </div>
+                            <div class="sec-rule-group">
+                                <div class="sec-rule-header">
+                                    <i class="fas fa-fingerprint"></i>
+                                    <span>PII Detection</span>
+                                    <span class="sec-rule-count" id="rulePiiCount">5 patterns</span>
+                                </div>
+                                <div class="sec-rule-bar"><div class="sec-rule-fill pii" id="rulePiiBar"></div></div>
+                            </div>
+                            <div class="sec-rule-group">
+                                <div class="sec-rule-header">
+                                    <i class="fas fa-ban"></i>
+                                    <span>Harmful Content</span>
+                                    <span class="sec-rule-count" id="ruleHarmCount">3 patterns</span>
+                                </div>
+                                <div class="sec-rule-bar"><div class="sec-rule-fill harmful" id="ruleHarmBar"></div></div>
+                            </div>
+                            <div class="sec-rule-group azure">
+                                <div class="sec-rule-header">
+                                    <i class="fab fa-microsoft"></i>
+                                    <span>Azure AI Content Safety</span>
+                                    <span class="sec-rule-badge live">LIVE API</span>
+                                </div>
+                                <div class="sec-azure-cats">
+                                    <span class="sec-azure-cat" id="azCatHate"><i class="fas fa-circle"></i> Hate <b id="azScoreHate">0</b></span>
+                                    <span class="sec-azure-cat" id="azCatSelfHarm"><i class="fas fa-circle"></i> SelfHarm <b id="azScoreSelfHarm">0</b></span>
+                                    <span class="sec-azure-cat" id="azCatSexual"><i class="fas fa-circle"></i> Sexual <b id="azScoreSexual">0</b></span>
+                                    <span class="sec-azure-cat" id="azCatViolence"><i class="fas fa-circle"></i> Violence <b id="azScoreViolence">0</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Scan Results -->
+                    <div class="sec-safety-card">
+                        <h4><i class="fas fa-user-shield"></i> Session Scan Results</h4>
+                        <div class="sec-safety-stats" id="secSafetyStats">
+                            <div class="sec-safety-stat">
+                                <span class="sec-safety-val" id="safetyStories">0</span>
+                                <span class="sec-safety-lbl">Stories Scanned</span>
+                            </div>
+                            <div class="sec-safety-stat">
+                                <span class="sec-safety-val" id="safetyThreats">0</span>
+                                <span class="sec-safety-lbl">Threats Caught</span>
+                            </div>
+                            <div class="sec-safety-stat">
+                                <span class="sec-safety-val" id="safetyPii">0</span>
+                                <span class="sec-safety-lbl">PII Detected</span>
+                            </div>
+                            <div class="sec-safety-stat">
+                                <span class="sec-safety-val safe" id="safetyStatus">CLEAN</span>
+                                <span class="sec-safety-lbl">Status</span>
+                            </div>
+                        </div>
+                        <div class="sec-classification-row">
+                            <span class="sec-class-label">Data Classification</span>
+                            <span class="sec-class-badge public" id="safetyClassification">PUBLIC</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Errors -->
+                    <div class="sec-error-card">
+                        <h4><i class="fas fa-bug"></i> Recent Errors</h4>
+                        <div class="sec-error-list" id="secErrorList">
+                            <p class="sec-empty">No errors in this period</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+    <script src="/static/js/app.js?v=34"></script>
+</body>
+</html>

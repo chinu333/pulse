@@ -1,0 +1,201 @@
+{
+  "7": {
+    "period_days": 7,
+    "summary": {
+      "total_runs": 1247,
+      "successful": 1198,
+      "failed": 49,
+      "success_rate": 96.1,
+      "total_tokens": 2841560,
+      "prompt_tokens": 1704936,
+      "completion_tokens": 1136624,
+      "avg_latency_s": 2.4,
+      "p95_latency_s": 5.8,
+      "feedback_positive": 312,
+      "feedback_negative": 18
+    },
+    "agent_distribution": [
+      { "agent": "researcher", "runs": 287, "success_rate": 97.6, "avg_latency": 3.1 },
+      { "agent": "writer", "runs": 264, "success_rate": 98.1, "avg_latency": 4.2 },
+      { "agent": "optimizer", "runs": 198, "success_rate": 95.5, "avg_latency": 1.8 },
+      { "agent": "factchecker", "runs": 142, "success_rate": 94.4, "avg_latency": 2.9 },
+      { "agent": "compliance", "runs": 118, "success_rate": 97.5, "avg_latency": 1.4 },
+      { "agent": "security_inbound", "runs": 84, "success_rate": 100.0, "avg_latency": 0.6 },
+      { "agent": "security_outbound", "runs": 82, "success_rate": 100.0, "avg_latency": 0.5 },
+      { "agent": "image_gen", "runs": 36, "success_rate": 88.9, "avg_latency": 6.8 },
+      { "agent": "speech", "runs": 22, "success_rate": 90.9, "avg_latency": 5.2 },
+      { "agent": "translation", "runs": 14, "success_rate": 92.9, "avg_latency": 3.6 }
+    ],
+    "daily_breakdown": [
+      { "date": "2026-03-15", "runs": 156, "success": 150, "failed": 6, "tokens": 389400 },
+      { "date": "2026-03-16", "runs": 182, "success": 176, "failed": 6, "tokens": 421800 },
+      { "date": "2026-03-17", "runs": 204, "success": 196, "failed": 8, "tokens": 468100 },
+      { "date": "2026-03-18", "runs": 178, "success": 172, "failed": 6, "tokens": 401200 },
+      { "date": "2026-03-19", "runs": 195, "success": 187, "failed": 8, "tokens": 448700 },
+      { "date": "2026-03-20", "runs": 168, "success": 160, "failed": 8, "tokens": 372500 },
+      { "date": "2026-03-21", "runs": 164, "success": 157, "failed": 7, "tokens": 339860 }
+    ],
+    "error_types": [
+      { "error": "Azure OpenAI rate limit exceeded (429)", "count": 18 },
+      { "error": "Content Safety API timeout after 10s", "count": 12 },
+      { "error": "Image generation quota exceeded", "count": 8 },
+      { "error": "Azure Search index not found: breaking-news", "count": 6 },
+      { "error": "Speech synthesis voice not available: en-US-Aria", "count": 5 }
+    ],
+    "content_safety": {
+      "session_stories": 48,
+      "session_scans": 48,
+      "session_threats_found": 7,
+      "session_pii_detected": 3,
+      "classification": "INTERNAL",
+      "injection_hits": 4,
+      "pii_hits": 3,
+      "harmful_hits": 0,
+      "azure_category_scores": { "Hate": 0, "SelfHarm": 0, "Sexual": 0, "Violence": 1 }
+    }
+  },
+  "15": {
+    "period_days": 15,
+    "summary": {
+      "total_runs": 2814,
+      "successful": 2698,
+      "failed": 116,
+      "success_rate": 95.9,
+      "total_tokens": 6385200,
+      "prompt_tokens": 3831120,
+      "completion_tokens": 2554080,
+      "avg_latency_s": 2.6,
+      "p95_latency_s": 6.2,
+      "feedback_positive": 698,
+      "feedback_negative": 42
+    },
+    "agent_distribution": [
+      { "agent": "researcher", "runs": 648, "success_rate": 97.2, "avg_latency": 3.2 },
+      { "agent": "writer", "runs": 594, "success_rate": 97.8, "avg_latency": 4.4 },
+      { "agent": "optimizer", "runs": 450, "success_rate": 95.1, "avg_latency": 1.9 },
+      { "agent": "factchecker", "runs": 320, "success_rate": 93.8, "avg_latency": 3.0 },
+      { "agent": "compliance", "runs": 268, "success_rate": 97.0, "avg_latency": 1.5 },
+      { "agent": "security_inbound", "runs": 186, "success_rate": 100.0, "avg_latency": 0.6 },
+      { "agent": "security_outbound", "runs": 184, "success_rate": 100.0, "avg_latency": 0.5 },
+      { "agent": "image_gen", "runs": 82, "success_rate": 87.8, "avg_latency": 7.1 },
+      { "agent": "speech", "runs": 48, "success_rate": 89.6, "avg_latency": 5.4 },
+      { "agent": "translation", "runs": 34, "success_rate": 91.2, "avg_latency": 3.8 }
+    ],
+    "daily_breakdown": [
+      { "date": "2026-03-07", "runs": 168, "success": 160, "failed": 8, "tokens": 378400 },
+      { "date": "2026-03-08", "runs": 145, "success": 138, "failed": 7, "tokens": 326800 },
+      { "date": "2026-03-09", "runs": 192, "success": 184, "failed": 8, "tokens": 442600 },
+      { "date": "2026-03-10", "runs": 210, "success": 201, "failed": 9, "tokens": 483200 },
+      { "date": "2026-03-11", "runs": 198, "success": 190, "failed": 8, "tokens": 451800 },
+      { "date": "2026-03-12", "runs": 176, "success": 168, "failed": 8, "tokens": 398200 },
+      { "date": "2026-03-13", "runs": 224, "success": 215, "failed": 9, "tokens": 518400 },
+      { "date": "2026-03-14", "runs": 189, "success": 182, "failed": 7, "tokens": 432100 },
+      { "date": "2026-03-15", "runs": 156, "success": 150, "failed": 6, "tokens": 389400 },
+      { "date": "2026-03-16", "runs": 182, "success": 176, "failed": 6, "tokens": 421800 },
+      { "date": "2026-03-17", "runs": 204, "success": 196, "failed": 8, "tokens": 468100 },
+      { "date": "2026-03-18", "runs": 178, "success": 172, "failed": 6, "tokens": 401200 },
+      { "date": "2026-03-19", "runs": 195, "success": 187, "failed": 8, "tokens": 448700 },
+      { "date": "2026-03-20", "runs": 168, "success": 160, "failed": 8, "tokens": 372500 },
+      { "date": "2026-03-21", "runs": 229, "success": 219, "failed": 10, "tokens": 451900 }
+    ],
+    "error_types": [
+      { "error": "Azure OpenAI rate limit exceeded (429)", "count": 38 },
+      { "error": "Content Safety API timeout after 10s", "count": 28 },
+      { "error": "Image generation quota exceeded", "count": 19 },
+      { "error": "Azure Search index not found: breaking-news", "count": 14 },
+      { "error": "Speech synthesis voice not available: en-US-Aria", "count": 9 },
+      { "error": "Translation API unsupported locale: zh-yue", "count": 8 }
+    ],
+    "content_safety": {
+      "session_stories": 112,
+      "session_scans": 112,
+      "session_threats_found": 14,
+      "session_pii_detected": 6,
+      "classification": "INTERNAL",
+      "injection_hits": 8,
+      "pii_hits": 6,
+      "harmful_hits": 0,
+      "azure_category_scores": { "Hate": 1, "SelfHarm": 0, "Sexual": 0, "Violence": 1 }
+    }
+  },
+  "30": {
+    "period_days": 30,
+    "summary": {
+      "total_runs": 5642,
+      "successful": 5388,
+      "failed": 254,
+      "success_rate": 95.5,
+      "total_tokens": 12748900,
+      "prompt_tokens": 7649340,
+      "completion_tokens": 5099560,
+      "avg_latency_s": 2.7,
+      "p95_latency_s": 6.5,
+      "feedback_positive": 1402,
+      "feedback_negative": 88
+    },
+    "agent_distribution": [
+      { "agent": "researcher", "runs": 1296, "success_rate": 96.8, "avg_latency": 3.3 },
+      { "agent": "writer", "runs": 1190, "success_rate": 97.4, "avg_latency": 4.5 },
+      { "agent": "optimizer", "runs": 902, "success_rate": 94.7, "avg_latency": 2.0 },
+      { "agent": "factchecker", "runs": 642, "success_rate": 93.3, "avg_latency": 3.1 },
+      { "agent": "compliance", "runs": 538, "success_rate": 96.5, "avg_latency": 1.6 },
+      { "agent": "security_inbound", "runs": 374, "success_rate": 100.0, "avg_latency": 0.6 },
+      { "agent": "security_outbound", "runs": 370, "success_rate": 100.0, "avg_latency": 0.5 },
+      { "agent": "image_gen", "runs": 164, "success_rate": 86.6, "avg_latency": 7.4 },
+      { "agent": "speech", "runs": 98, "success_rate": 88.8, "avg_latency": 5.6 },
+      { "agent": "translation", "runs": 68, "success_rate": 89.7, "avg_latency": 4.0 }
+    ],
+    "daily_breakdown": [
+      { "date": "2026-02-20", "runs": 148, "success": 140, "failed": 8, "tokens": 334200 },
+      { "date": "2026-02-21", "runs": 162, "success": 154, "failed": 8, "tokens": 368400 },
+      { "date": "2026-02-22", "runs": 134, "success": 126, "failed": 8, "tokens": 298600 },
+      { "date": "2026-02-23", "runs": 178, "success": 170, "failed": 8, "tokens": 402800 },
+      { "date": "2026-02-24", "runs": 196, "success": 186, "failed": 10, "tokens": 448200 },
+      { "date": "2026-02-25", "runs": 210, "success": 200, "failed": 10, "tokens": 481600 },
+      { "date": "2026-02-26", "runs": 188, "success": 180, "failed": 8, "tokens": 428400 },
+      { "date": "2026-02-27", "runs": 204, "success": 194, "failed": 10, "tokens": 468800 },
+      { "date": "2026-02-28", "runs": 172, "success": 164, "failed": 8, "tokens": 392200 },
+      { "date": "2026-03-01", "runs": 218, "success": 208, "failed": 10, "tokens": 501400 },
+      { "date": "2026-03-02", "runs": 194, "success": 184, "failed": 10, "tokens": 441800 },
+      { "date": "2026-03-03", "runs": 186, "success": 178, "failed": 8, "tokens": 423600 },
+      { "date": "2026-03-04", "runs": 192, "success": 182, "failed": 10, "tokens": 438200 },
+      { "date": "2026-03-05", "runs": 224, "success": 214, "failed": 10, "tokens": 514800 },
+      { "date": "2026-03-06", "runs": 208, "success": 198, "failed": 10, "tokens": 476400 },
+      { "date": "2026-03-07", "runs": 168, "success": 160, "failed": 8, "tokens": 378400 },
+      { "date": "2026-03-08", "runs": 145, "success": 138, "failed": 7, "tokens": 326800 },
+      { "date": "2026-03-09", "runs": 192, "success": 184, "failed": 8, "tokens": 442600 },
+      { "date": "2026-03-10", "runs": 210, "success": 201, "failed": 9, "tokens": 483200 },
+      { "date": "2026-03-11", "runs": 198, "success": 190, "failed": 8, "tokens": 451800 },
+      { "date": "2026-03-12", "runs": 176, "success": 168, "failed": 8, "tokens": 398200 },
+      { "date": "2026-03-13", "runs": 224, "success": 215, "failed": 9, "tokens": 518400 },
+      { "date": "2026-03-14", "runs": 189, "success": 182, "failed": 7, "tokens": 432100 },
+      { "date": "2026-03-15", "runs": 156, "success": 150, "failed": 6, "tokens": 389400 },
+      { "date": "2026-03-16", "runs": 182, "success": 176, "failed": 6, "tokens": 421800 },
+      { "date": "2026-03-17", "runs": 204, "success": 196, "failed": 8, "tokens": 468100 },
+      { "date": "2026-03-18", "runs": 178, "success": 172, "failed": 6, "tokens": 401200 },
+      { "date": "2026-03-19", "runs": 195, "success": 187, "failed": 8, "tokens": 448700 },
+      { "date": "2026-03-20", "runs": 168, "success": 160, "failed": 8, "tokens": 372500 },
+      { "date": "2026-03-21", "runs": 229, "success": 219, "failed": 10, "tokens": 451900 }
+    ],
+    "error_types": [
+      { "error": "Azure OpenAI rate limit exceeded (429)", "count": 82 },
+      { "error": "Content Safety API timeout after 10s", "count": 58 },
+      { "error": "Image generation quota exceeded", "count": 42 },
+      { "error": "Azure Search index not found: breaking-news", "count": 31 },
+      { "error": "Speech synthesis voice not available: en-US-Aria", "count": 19 },
+      { "error": "Translation API unsupported locale: zh-yue", "count": 14 },
+      { "error": "Fact-check source unreachable: reuters.com", "count": 8 }
+    ],
+    "content_safety": {
+      "session_stories": 224,
+      "session_scans": 224,
+      "session_threats_found": 31,
+      "session_pii_detected": 12,
+      "classification": "CONFIDENTIAL",
+      "injection_hits": 16,
+      "pii_hits": 12,
+      "harmful_hits": 3,
+      "azure_category_scores": { "Hate": 1, "SelfHarm": 0, "Sexual": 1, "Violence": 2 }
+    }
+  }
+}

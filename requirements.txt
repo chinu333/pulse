@@ -1,0 +1,29 @@
+# ============================================================
+# PULSE — Newsroom AI Orchestrator
+# Python Dependencies
+# ============================================================
+
+# --- Core Framework ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-dotenv==1.0.1
+pydantic==2.10.4
+
+# --- LangChain / LangGraph / LangSmith ---
+langchain==0.3.14
+langchain-openai==0.3.0
+langchain-community==0.3.14
+langgraph==0.2.60
+langsmith==0.2.10
+
+# --- Azure ---
+azure-search-documents==11.6.0b8
+azure-identity==1.19.0
+azure-cognitiveservices-speech==1.48.2
+
+# --- WebSocket support ---
+websockets==14.1
+
+# --- Utilities ---
+httpx==0.28.1
+aiofiles==24.1.0

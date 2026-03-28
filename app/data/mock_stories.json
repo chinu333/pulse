@@ -1,0 +1,56 @@
+[
+  {
+    "id": "story_001",
+    "headline": "Breaking: Major Flooding Impacts Three Counties in Ohio Valley",
+    "description": "Severe weather system brings record rainfall, prompting emergency declarations across multiple counties. River levels at historic highs.",
+    "priority": "breaking",
+    "sources": ["National Weather Service", "Ohio Emergency Management Agency", "AP Wire"],
+    "target_audience": "local",
+    "category": "weather_emergency"
+  },
+  {
+    "id": "story_002",
+    "headline": "City Council Approves $200M Downtown Revitalization Plan",
+    "description": "After months of debate, the city council voted 7-2 to approve the largest urban renewal project in the city's history.",
+    "priority": "high",
+    "sources": ["City Council Minutes", "Mayor's Office", "Chamber of Commerce"],
+    "target_audience": "local",
+    "category": "local_government"
+  },
+  {
+    "id": "story_003",
+    "headline": "Local School District Reports Record Graduation Rates",
+    "description": "Graduation rates across the district have reached 94.2%, the highest in two decades, attributed to new mentorship programs.",
+    "priority": "medium",
+    "sources": ["School District PR", "State Education Department"],
+    "target_audience": "community",
+    "category": "education"
+  },
+  {
+    "id": "story_004",
+    "headline": "Tech Company Announces 500 New Jobs at Regional Headquarters",
+    "description": "A major technology firm will expand its regional presence, creating 500 positions with an average salary of $85,000.",
+    "priority": "medium",
+    "sources": ["Company Press Release", "Economic Development Office"],
+    "target_audience": "general",
+    "category": "business"
+  },
+  {
+    "id": "story_005",
+    "headline": "Urgent: Chemical Spill Prompts Evacuation Near Industrial Park",
+    "description": "Hazmat teams responding to chemical release at manufacturing facility. Residents within 2-mile radius ordered to evacuate.",
+    "priority": "breaking",
+    "sources": ["Fire Department", "EPA Regional Office", "County Sheriff"],
+    "target_audience": "local",
+    "category": "public_safety"
+  },
+  {
+    "id": "story_006",
+    "headline": "State Legislature Passes Landmark Education Funding Bill",
+    "description": "Bipartisan legislation increases K-12 funding by $1.2 billion over five years. Governor expected to sign next week.",
+    "priority": "high",
+    "sources": ["State Capitol Bureau", "Legislative Records", "Governor's Office"],
+    "target_audience": "statewide",
+    "category": "politics"
+  }
+]
